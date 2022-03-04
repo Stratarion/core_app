@@ -11,6 +11,8 @@ import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
 
+const test = true;
+
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
@@ -31,6 +33,10 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log(form);
+
+    // if (test) return;
 
     if (isSignup) {
       dispatch(signup(form, history));

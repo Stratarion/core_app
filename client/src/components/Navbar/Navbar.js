@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Typography, Toolbar, Avatar, Button, Box } from '@material-ui/core';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
+import { Menu, Button, Row, Col, Avatar } from 'antd';
 
+import { UserOutlined } from '@ant-design/icons';
 import * as actionType from '../../constants/actionTypes';
 import useStyles from './styles';
-
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 
@@ -27,6 +27,7 @@ const pages = [
 
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [currentPage, setCurrentPage] = useState('');
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -41,6 +42,14 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const currentPathIndex = pages.findIndex((item) => {
+      return location.pathname.includes(item.link)
+    });
+    console.log(currentPathIndex)
+    currentPathIndex >= 0 && setCurrentPage(pages[currentPathIndex].link);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const token = user?.token;
 
     if (token) {
@@ -53,36 +62,33 @@ const Navbar = () => {
   }, [location]);
 
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit">
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        {pages.map((page) => (
-          <Button
-            key={page.link}
-            component={Link}
-            to={page.link}
-            // onClick={handleCloseNavMenu}
-            sx={{ my: 2, color: 'white', display: 'block' }}
-          >
-            {page.title}
-          </Button>
-        ))}
-      </Box>
-      {/* <Link to="/" className={classes.brandContainer}>
-        <img component={Link} to="/" src={memoriesText} alt="icon" height="45px" />
-        <img className={classes.image} src={memoriesLogo} alt="icon" height="40px" />
-      </Link> */}
-      <Toolbar className={classes.toolbar}>
+    <Row justify="space-between">
+      <Col span={18}>
+        <Menu theme="dark" selectedKeys={[currentPage]} mode="horizontal">
+          {pages.map((menuItem) => (
+            <Menu.Item key={menuItem.link}>
+              <Link to={menuItem.link} >{menuItem.title}</Link>
+            </Menu.Item>
+          ))}
+        </Menu>
+      </Col>
         {user?.result ? (
-          <div className={classes.profile}>
-            <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-            <Typography className={classes.userName} variant="h6">{user?.result.name}</Typography>
-            <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
-          </div>
+          <>
+            <Col span={1}>
+              <Avatar className={classes.purple} alt={UserOutlined} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+            </Col>
+            <Col span={2}>
+              <Button className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
+            </Col>
+          </>
         ) : (
-          <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+          <Col span={2}>
+            <Button component={Link} color="primary">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          </Col>
         )}
-      </Toolbar>
-    </AppBar>
+    </Row>
   );
 };
 

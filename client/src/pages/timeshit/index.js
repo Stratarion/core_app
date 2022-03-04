@@ -1,12 +1,11 @@
 import React from 'react';
-import Calendar from 
 
-function PageTimeshit() {
+const PageTimeshit = () => {
     return (
         <div>
             123
         </div>
     )
-}
+};
 
-export default PageTimeshit
+export default PageTimeshit;
