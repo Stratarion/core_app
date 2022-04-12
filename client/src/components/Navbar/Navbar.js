@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 import { Menu, Button, Row, Col, Avatar } from 'antd';
 
-import { UserOutlined } from '@ant-design/icons';
 import * as actionType from '../../constants/actionTypes';
 import useStyles from './styles';
 
@@ -13,17 +12,17 @@ import useStyles from './styles';
 const pages = [
   {
     title: 'Расписание',
-    link: '/timeshit'
+    link: '/timeshit',
   },
   {
     title: 'Работники',
-    link: '/professionals'
+    link: '/professionals',
   },
   {
     title: 'Блог',
-    link: '/posts'
-  }
-]
+    link: '/posts',
+  },
+];
 
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -42,11 +41,9 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const currentPathIndex = pages.findIndex((item) => {
-      return location.pathname.includes(item.link)
-    });
-    console.log(currentPathIndex)
-    currentPathIndex >= 0 && setCurrentPage(pages[currentPathIndex].link);
+    const currentPathIndex = pages.findIndex((item) => location.pathname.includes(item.link));
+    console.log(currentPathIndex);
+    if (currentPathIndex >= 0) setCurrentPage(pages[currentPathIndex].link);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -67,27 +64,27 @@ const Navbar = () => {
         <Menu theme="dark" selectedKeys={[currentPage]} mode="horizontal">
           {pages.map((menuItem) => (
             <Menu.Item key={menuItem.link}>
-              <Link to={menuItem.link} >{menuItem.title}</Link>
+              <Link to={menuItem.link}>{menuItem.title}</Link>
             </Menu.Item>
           ))}
         </Menu>
       </Col>
-        {user?.result ? (
-          <>
-            <Col span={1}>
-              <Avatar className={classes.purple} alt={UserOutlined} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-            </Col>
-            <Col span={2}>
-              <Button className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
-            </Col>
-          </>
-        ) : (
-          <Col span={2}>
-            <Button component={Link} color="primary">
-              <Link to="/auth">Sign In</Link>
-            </Button>
+      {user?.result ? (
+        <>
+          <Col span={1} offset={3}>
+            <Avatar className={classes.purple} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
           </Col>
-        )}
+          <Col span={2}>
+            <Button className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
+          </Col>
+        </>
+      ) : (
+        <Col span={2}>
+          <Button component={Link} color="primary">
+            <Link to="/auth">Sign In</Link>
+          </Button>
+        </Col>
+      )}
     </Row>
   );
 };

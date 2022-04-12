@@ -21,7 +21,7 @@ const App = () => {
         <Header>
           <Navbar />
         </Header>
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '20px 50px' }}>
           <Switch>
             {/* старьё */}
             <Route path="/" exact component={() => <Redirect to="/posts" />} />

@@ -12,13 +12,17 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
+    requireConfigFile: false,
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
+    babelOptions: {
+      presets: ['@babel/preset-react'],
+    },
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   plugins: [
     'react',
   ],

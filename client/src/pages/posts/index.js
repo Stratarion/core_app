@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function PagePosts() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return (
+    <div />
+  );
 }
 
-export default PagePosts
+export default PagePosts;

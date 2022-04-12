@@ -1,11 +1,9 @@
 import React from 'react';
 
-const PageTimeshit = () => {
-    return (
-        <div>
-            123
-        </div>
-    )
-};
+const PageTimeshit = () => (
+  <div>
+    123
+  </div>
+);
 
 export default PageTimeshit;

@@ -7,11 +7,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import Icon from './icon';
 import { signin, signup, googlesignin } from '../../actions/auth';
-import { AUTH } from '../../constants/actionTypes';
+// import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
 
-const test = true;
+// const test = true;
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -48,7 +48,7 @@ const SignUp = () => {
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-    dispatch(googlesignin({result, token}, history));
+    dispatch(googlesignin({ result, token }, history));
   };
 
   const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
