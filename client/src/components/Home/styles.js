@@ -17,4 +17,9 @@ export default makeStyles((theme) => ({
       flexDirection: 'column-reverse',
     },
   },
+  formBtn: {
+    position: 'fixed',
+    top: '100px',
+    right: '5px',
+  },
 }));

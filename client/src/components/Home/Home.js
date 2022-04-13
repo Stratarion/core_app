@@ -3,8 +3,8 @@ import { AppBar, TextField, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
-import { List, Skeleton, Divider, Space, Empty, Row, Col } from 'antd';
-import { MessageOutlined, LikeOutlined } from '@ant-design/icons';
+import { List, Skeleton, Divider, Space, Empty, Row, Col, Drawer } from 'antd';
+import { MessageOutlined, LikeOutlined, LeftSquareTwoTone } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getPostsBySearch } from '../../actions/posts';
 import * as api from '../../api/index.js';
@@ -32,6 +32,7 @@ const Home = () => {
   // const searchQuery = query.get('searchQuery');
 
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [data, setData] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(query.get('page') || 1);
@@ -81,7 +82,7 @@ const Home = () => {
 
   return (
     <Row>
-      <Col xs={24} sm={12} md={18}>
+      <Col xs={24} sm={24} md={24}>
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}
@@ -118,27 +119,37 @@ const Home = () => {
                   title={<Link to={`/posts/${item._id}`}>{item.title}</Link>}
                   description={item.name}
                 />
-                {item.message.split(' ').splice(0, 100).join(' ')}
+                {item.message.split(' ').splice(0, 80).join(' ')}
               </List.Item>
             )}
           />
         </InfiniteScroll>
       </Col>
-      <Col xs={24} sm={12} md={6}>
-        <AppBar className={classes.appBarSearch} position="static" color="inherit">
-          <TextField onKeyDown={handleKeyPress} name="search" variant="outlined" label="Search Memories" fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
-          <ChipInput
-            style={{ margin: '10px 0' }}
-            value={tags}
-            onAdd={(chip) => handleAddChip(chip)}
-            onDelete={(chip) => handleDeleteChip(chip)}
-            label="Search Tags"
-            variant="outlined"
-          />
-          <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
-        </AppBar>
-        <Form currentId={currentId} setCurrentId={setCurrentId} />
-      </Col>
+
+      <div className={classes.formBtn}>
+        <LeftSquareTwoTone onClick={() => setShowForm(!showForm)} style={{ fontSize: '20px' }} />
+      </div>
+      <Drawer
+        title="Поиск записей"
+        onClose={() => setShowForm(false)}
+        visible={showForm}
+      >
+        <Col>
+          <AppBar className={classes.appBarSearch} position="static" color="inherit">
+            <TextField onKeyDown={handleKeyPress} name="search" variant="outlined" label="Search Memories" fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
+            <ChipInput
+              style={{ margin: '10px 0' }}
+              value={tags}
+              onAdd={(chip) => handleAddChip(chip)}
+              onDelete={(chip) => handleDeleteChip(chip)}
+              label="Search Tags"
+              variant="outlined"
+            />
+            <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
+          </AppBar>
+        </Col>
+        <Form currentId={currentId} setCurrentId={setCurrentId} showForm={showForm} />
+      </Drawer>
     </Row>
   );
 };

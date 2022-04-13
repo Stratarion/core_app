@@ -5,8 +5,13 @@ import FileBase from 'react-file-base64';
 import { useHistory } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 
+// import { Drawer, Form as AntForm, Button as AntButton, Col, Row, Input, Select, DatePicker, Space } from 'antd';
+// import { PlusOutlined } from '@ant-design/icons';
+
 import { createPost, updatePost } from '../../actions/posts';
 import useStyles from './styles';
+
+// const { Option } = Select;
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({ title: '', message: '', tags: [], selectedFile: '' });
