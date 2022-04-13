@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, TextField, Button } from '@material-ui/core';
+import { AppBar, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
-import { List, Skeleton, Divider, Space, Empty, Row, Col, Drawer } from 'antd';
-import { MessageOutlined, LikeOutlined, LeftSquareTwoTone } from '@ant-design/icons';
+import { List, Skeleton, Button, Divider, Space, Empty, Row, Col, Drawer } from 'antd';
+import { MessageOutlined, LikeOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getPostsBySearch } from '../../actions/posts';
 import * as api from '../../api/index.js';
@@ -32,7 +32,8 @@ const Home = () => {
   // const searchQuery = query.get('searchQuery');
 
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [data, setData] = useState([]);
   const [total, setTotal] = useState([]);
   const [page, setPage] = useState(query.get('page') || 1);
@@ -81,7 +82,13 @@ const Home = () => {
   const handleDeleteChip = (chipToDelete) => setTags(tags.filter((tag) => tag !== chipToDelete));
 
   return (
-    <Row>
+    <Row gutter={[16, 16]}>
+      <Col>
+        <Button color="primary" onClick={() => setShowSearch(true)} icon={<SearchOutlined />}>Поиск</Button>
+      </Col>
+      <Col>
+        <Button color="primary" onClick={() => setShowAdd(true)} icon={<PlusOutlined />}>Создать запись</Button>
+      </Col>
       <Col xs={24} sm={24} md={24}>
         <InfiniteScroll
           dataLength={data.length}
@@ -125,14 +132,10 @@ const Home = () => {
           />
         </InfiniteScroll>
       </Col>
-
-      <div className={classes.formBtn}>
-        <LeftSquareTwoTone onClick={() => setShowForm(!showForm)} style={{ fontSize: '20px' }} />
-      </div>
       <Drawer
         title="Поиск записей"
-        onClose={() => setShowForm(false)}
-        visible={showForm}
+        onClose={() => setShowSearch(false)}
+        visible={showSearch}
       >
         <Col>
           <AppBar className={classes.appBarSearch} position="static" color="inherit">
@@ -148,7 +151,13 @@ const Home = () => {
             <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
           </AppBar>
         </Col>
-        <Form currentId={currentId} setCurrentId={setCurrentId} showForm={showForm} />
+      </Drawer>
+      <Drawer
+        title="Добавить запись"
+        onClose={() => setShowAdd(false)}
+        visible={showAdd}
+      >
+        <Form currentId={currentId} setCurrentId={setCurrentId} showSearch={showAdd} />
       </Drawer>
     </Row>
   );
