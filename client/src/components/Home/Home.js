@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, Link } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
-import { List, Skeleton, Button, Divider, Space, Empty, Row, Col, Drawer } from 'antd';
+import { List, Skeleton, Button, Divider, Space, Empty, Row, Col, Drawer, Input, Form } from 'antd';
 import { MessageOutlined, LikeOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getPostsBySearch } from '../../actions/posts';
 import * as api from '../../api/index.js';
 
 // import Posts from '../Posts/Posts';
-import Form from '../Form/Form';
+import FormAdd from '../Form/Form';
 // import Pagination from '../Pagination';
-import useStyles from './styles';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
+
+const configs = {
+  drawerWidth: '520px',
+};
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -26,7 +27,6 @@ const IconText = ({ icon, text }) => (
 );
 
 const Home = () => {
-  const classes = useStyles();
   const query = useQuery();
   // const page = query.get('page') || 1;
   // const searchQuery = query.get('searchQuery');
@@ -58,28 +58,16 @@ const Home = () => {
 
   const [currentId, setCurrentId] = useState(0);
 
-  const [search, setSearch] = useState('');
-  const [tags, setTags] = useState([]);
   const history = useHistory();
 
-  const searchPost = () => {
-    if (search.trim() || tags) {
-      dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-      history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+  const searchPost = (values) => {
+    if (values.search.trim() || values.tags) {
+      dispatch(getPostsBySearch({ search: values.search, tags: values.tags.join(',') }));
+      history.push(`/posts/search?searchQuery=${values.search || 'none'}&tags=${values.tags.join(',')}`);
     } else {
       history.push('/');
     }
   };
-
-  const handleKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      searchPost();
-    }
-  };
-
-  const handleAddChip = (tag) => setTags([...tags, tag]);
-
-  const handleDeleteChip = (chipToDelete) => setTags(tags.filter((tag) => tag !== chipToDelete));
 
   return (
     <Row gutter={[16, 16]}>
@@ -126,7 +114,8 @@ const Home = () => {
                   title={<Link to={`/posts/${item._id}`}>{item.title}</Link>}
                   description={item.name}
                 />
-                {item.message.split(' ').splice(0, 80).join(' ')}
+                {item?.message?.split(' ').splice(0, 80).join(' ')}
+                <Divider />
               </List.Item>
             )}
           />
@@ -134,30 +123,50 @@ const Home = () => {
       </Col>
       <Drawer
         title="Поиск записей"
+        width={configs.drawerWidth}
         onClose={() => setShowSearch(false)}
         visible={showSearch}
       >
         <Col>
-          <AppBar className={classes.appBarSearch} position="static" color="inherit">
-            <TextField onKeyDown={handleKeyPress} name="search" variant="outlined" label="Search Memories" fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
-            <ChipInput
-              style={{ margin: '10px 0' }}
-              value={tags}
-              onAdd={(chip) => handleAddChip(chip)}
-              onDelete={(chip) => handleDeleteChip(chip)}
-              label="Search Tags"
-              variant="outlined"
-            />
-            <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
-          </AppBar>
+          <Form
+            layout="vertical"
+            hideRequiredMark
+            onFinish={searchPost}
+          >
+            <Row gutter={[16, 0]}>
+              <Col span={12}>
+                <Form.Item
+                  name="search"
+                  label="Заголовок"
+                >
+                  <Input placeholder="Заголовок поста" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="tags"
+                  label="Тэги"
+                >
+                  <Input placeholder="Тэги через пробел" />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Button onClick={() => setShowSearch(false)}>Отмена</Button>
+              </Col>
+              <Col>
+                <Button htmlType="submit" type="primary">Принять</Button>
+              </Col>
+            </Row>
+          </Form>
         </Col>
       </Drawer>
       <Drawer
         title="Добавить запись"
+        width={configs.drawerWidth}
         onClose={() => setShowAdd(false)}
         visible={showAdd}
       >
-        <Form currentId={currentId} setCurrentId={setCurrentId} showSearch={showAdd} />
+        <FormAdd currentId={currentId} setCurrentId={setCurrentId} showForm={showAdd} />
       </Drawer>
     </Row>
   );
