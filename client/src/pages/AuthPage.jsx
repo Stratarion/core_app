@@ -4,7 +4,7 @@ import { Row, Col, Form, Input, Button, Card } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
-import { signup, signin, googlesignin } from '../../actions/auth';
+import { signup, signin, googlesignin } from 'actions/auth';
 
 const SignUp = () => {
   const [isSignup, setIsSignup] = useState(false);

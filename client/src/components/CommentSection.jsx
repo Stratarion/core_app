@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Typography, Button, Input, Divider, Form } from 'antd';
 import { useDispatch } from 'react-redux';
-import { commentPost } from '../../actions/posts';
+import { commentPost } from '../actions/posts';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;

@@ -11,6 +11,13 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  settings: {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  },
   parserOptions: {
     requireConfigFile: false,
     ecmaFeatures: {
@@ -28,6 +35,7 @@ module.exports = {
   ],
   rules: {
     'import/extensions': 0,
+    "import/no-unresolved": 0,
     'react/prop-types': 0,
     'linebreak-style': 0,
     'react/state-in-constructor': 0,

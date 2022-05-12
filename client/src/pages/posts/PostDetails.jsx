@@ -3,9 +3,8 @@ import { Card, Row, Col, Typography, Image, Divider, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, Link } from 'react-router-dom';
-
-import { getPost, getPostsBySearch } from '../../actions/posts';
-import CommentSection from './CommentSection';
+import { getPost, getPostsBySearch } from 'actions/posts';
+import CommentSection from 'components/CommentSection';
 
 const { Title, Text } = Typography;
 
