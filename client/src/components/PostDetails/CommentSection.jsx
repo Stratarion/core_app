@@ -1,50 +1,49 @@
-import React, { useState, useRef } from 'react';
-import { Typography, TextField, Button } from '@material-ui/core/';
+import React from 'react';
+import { Col, Row, Typography, Button, Input, Divider, Form } from 'antd';
 import { useDispatch } from 'react-redux';
-
 import { commentPost } from '../../actions/posts';
-import useStyles from './styles';
+
+const { TextArea } = Input;
+const { Title, Text } = Typography;
 
 const CommentSection = ({ post }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
-  const [comment, setComment] = useState('');
   const dispatch = useDispatch();
-  const [comments, setComments] = useState(post?.comments);
-  const classes = useStyles();
-  const commentsRef = useRef();
+  const comments = post?.comments;
 
-  const handleComment = async () => {
-    const newComments = await dispatch(commentPost(`${user?.result?.name}: ${comment}`, post._id));
-
-    setComment('');
-    setComments(newComments);
-
-    commentsRef.current.scrollIntoView({ behavior: 'smooth' });
+  const handleComment = (values) => {
+    dispatch(commentPost(`${user?.result?.name}: ${values.comment}`, post._id));
   };
 
+  const renderNoComments = () => (
+    <Text>Ещё никто не оставил комментарий</Text>
+  );
+
+  const renderCommentsBlock = () => comments.map((c) => (
+    <Text>
+      <strong>{c.split(': ')[0]}</strong>
+      {c.split(':')[1]}
+    </Text>
+  ));
+
   return (
-    <div>
-      <div className={classes.commentsOuterContainer}>
-        <div className={classes.commentsInnerContainer}>
-          <Typography gutterBottom variant="h6">Comments</Typography>
-          {comments?.map((c, i) => (
-            <Typography key={i} gutterBottom variant="subtitle1">
-              <strong>{c.split(': ')[0]}</strong>
-              {c.split(':')[1]}
-            </Typography>
-          ))}
-          <div ref={commentsRef} />
-        </div>
-        <div style={{ width: '70%' }}>
-          <Typography gutterBottom variant="h6">Write a comment</Typography>
-          <TextField fullWidth rows={4} variant="outlined" label="Comment" multiline value={comment} onChange={(e) => setComment(e.target.value)} />
-          <br />
-          <Button style={{ marginTop: '10px' }} fullWidth disabled={!comment.length} color="primary" variant="contained" onClick={handleComment}>
-            Comment
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Form onFinish={handleComment} layout="vertical" hideRequiredMark>
+      <Row>
+        <Col span={24}>
+          <Title level={4}>Комментарии</Title>
+          { comments ? renderNoComments() : renderCommentsBlock() }
+        </Col>
+        <Divider />
+        <Col span={24}>
+          <Form.Item label="Написать комментарий" name="comment">
+            <TextArea />
+          </Form.Item>
+        </Col>
+        <Col>
+          <Button htmlType="submit">Отправить</Button>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

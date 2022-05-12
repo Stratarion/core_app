@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import { signup, signin, googlesignin } from '../../actions/auth';
-// import { AUTH } from '../../constants/actionTypes';
 
 const SignUp = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -38,7 +37,7 @@ const SignUp = () => {
     dispatch(googlesignin({ result, token }, history));
   };
 
-  const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+  const googleError = () => 'Google Sign In was unsuccessful. Try again later';
 
   const renderSignUp = () => (
     <>

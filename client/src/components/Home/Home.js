@@ -45,7 +45,6 @@ const Home = () => {
     }
     setLoading(true);
     const results = await api.fetchPosts(page);
-    console.log(results);
     setTotal(results.data.totalCount);
     // const results = await dispatch(getPosts(page));
     setData([...data, ...results.data.data]);
