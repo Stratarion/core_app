@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { Typography, CircularProgress, Grid, Divider } from '@material-ui/core';
+import { Typography, Spin, Row, Col, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-
 import Post from '../Posts/Post/Post';
 import { getPostsByCreator, getPostsBySearch } from '../../actions/posts';
+
+const { Title } = Typography;
 
 const CreatorOrTag = () => {
   const { name } = useParams();
@@ -24,19 +25,23 @@ const CreatorOrTag = () => {
   if (!posts.length && !isLoading) return 'No posts';
 
   return (
-    <div>
-      <Typography variant="h2">{name}</Typography>
-      <Divider style={{ margin: '20px 0 50px 0' }} />
-      {isLoading ? <CircularProgress /> : (
-        <Grid container alignItems="stretch" spacing={3}>
-          {posts?.map((post) => (
-            <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
-              <Post post={post} />
-            </Grid>
-          ))}
-        </Grid>
-      )}
-    </div>
+    <Row>
+      <Col>
+        <Title level={2}>{name}</Title>
+      </Col>
+      <Divider />
+      <Col>
+        {isLoading ? <Spin /> : (
+          <Row>
+            {posts?.map((post) => (
+              <Col key={post._id} item xs={12} sm={12} md={6} lg={3}>
+                <Post post={post} />
+              </Col>
+            ))}
+          </Row>
+        )}
+      </Col>
+    </Row>
   );
 };
 

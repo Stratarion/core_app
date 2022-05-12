@@ -5,7 +5,6 @@ import decode from 'jwt-decode';
 import { Menu, Button, Row, Col, Avatar } from 'antd';
 
 import * as actionType from '../../constants/actionTypes';
-import useStyles from './styles';
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 
@@ -30,7 +29,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const classes = useStyles();
 
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
@@ -42,7 +40,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const currentPathIndex = pages.findIndex((item) => location.pathname.includes(item.link));
-    console.log(currentPathIndex);
     if (currentPathIndex >= 0) setCurrentPage(pages[currentPathIndex].link);
   }, [location.pathname]);
 
@@ -72,10 +69,10 @@ const Navbar = () => {
       {user?.result ? (
         <>
           <Col span={1} offset={3}>
-            <Avatar className={classes.purple} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+            <Avatar src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
           </Col>
           <Col span={2}>
-            <Button className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
+            <Button color="secondary" onClick={logout}>Logout</Button>
           </Col>
         </>
       ) : (
