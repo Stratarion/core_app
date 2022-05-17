@@ -1,8 +1,9 @@
+import { MainLib } from 'lib';
 import React from 'react';
 
 const PageTimeshit = () => (
   <div>
-    123
+    {MainLib.timeshit.title}
   </div>
 );
 

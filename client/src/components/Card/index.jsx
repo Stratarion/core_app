@@ -1,7 +1,5 @@
 import React from 'react';
-
-// import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-
+import { MainLib } from 'lib';
 import { Card as AntCard } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +19,7 @@ export const CardSimple = (data) => {
       title={title}
       style={{ height: 300 }}
       loading={loading}
-      extra={<Link to={link}>More</Link>}
+      extra={<Link to={link}>{MainLib.buttons.more}</Link>}
       cover={(
         <img
           alt="example"

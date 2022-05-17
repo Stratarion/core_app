@@ -3,6 +3,7 @@ import PostsPage from './posts';
 import AuthPage from './AuthPage';
 import CreatorOrTag from './CreatorOrTag';
 import PageTimeshit from './timeshit';
+import PageProfessionals from './professionals';
 
 export {
   PostDetails,
@@ -10,4 +11,5 @@ export {
   AuthPage,
   CreatorOrTag,
   PageTimeshit,
+  PageProfessionals,
 };

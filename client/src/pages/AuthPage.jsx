@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import { signup, signin, googlesignin } from 'actions/auth';
+import { MainLib } from 'lib';
 
 const SignUp = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -37,24 +38,24 @@ const SignUp = () => {
     dispatch(googlesignin({ result, token }, history));
   };
 
-  const googleError = () => 'Google Sign In was unsuccessful. Try again later';
+  const googleError = () => MainLib.auth.googleError;
 
   const renderSignUp = () => (
     <>
       <Col span={24}>
         <Form.Item
           name="firstName"
-          label="First Name"
+          label={MainLib.person.firstName}
         >
-          <Input placeholder="Имя" />
+          <Input placeholder={MainLib.person.firstName} />
         </Form.Item>
       </Col>
       <Col span={24}>
         <Form.Item
           name="lastName"
-          label="Last Name"
+          label={MainLib.person.lastName}
         >
-          <Input placeholder="Фамилия" />
+          <Input placeholder={MainLib.person.lastName} />
         </Form.Item>
       </Col>
     </>
@@ -63,7 +64,7 @@ const SignUp = () => {
   return (
     <Row>
       <Col offset={8} span={8}>
-        <Card title={isSignup ? 'Sign up' : 'Sign in'}>
+        <Card title={isSignup ? MainLib.auth.signUp : MainLib.auth.signIn}>
           <Form
             layout="vertical"
             hideRequiredMark
@@ -74,38 +75,38 @@ const SignUp = () => {
               <Col span={24}>
                 <Form.Item
                   name="email"
-                  label="Email Address"
+                  label={MainLib.person.email}
                 >
-                  <Input placeholder="Email Address" />
+                  <Input placeholder={MainLib.person.emailPlaceholder} />
                 </Form.Item>
               </Col>
               <Col span={24}>
                 <Form.Item
                   name="password"
-                  label="Password"
+                  label={MainLib.auth.password}
                 >
-                  <Input.Password placeholder="input password" />
+                  <Input.Password placeholder={MainLib.auth.passwordPlaceholder} />
                 </Form.Item>
               </Col>
               { isSignup && (
                 <Col span={24}>
                   <Form.Item
                     name="confirmPassword"
-                    label="Repeat Password"
+                    label={MainLib.auth.confirmPassword}
                   >
-                    <Input.Password placeholder="Repeat password" />
+                    <Input.Password placeholder={MainLib.auth.confirmPasswordPlaceholder} />
                   </Form.Item>
                 </Col>
               )}
               <Col>
-                <Button htmlType="submit">{ isSignup ? 'Sign Up' : 'Sign In' }</Button>
+                <Button htmlType="submit">{ isSignup ? MainLib.auth.signUp : MainLib.auth.signin }</Button>
               </Col>
               <Col>
                 <GoogleLogin
                   clientId="564033717568-bu2nr1l9h31bhk9bff4pqbenvvoju3oq.apps.googleusercontent.com"
                   render={(renderProps) => (
                     <Button onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                      Google Sign In
+                      {MainLib.buttons.googleSignIn}
                     </Button>
                   )}
                   onSuccess={googleSuccess}
@@ -115,7 +116,7 @@ const SignUp = () => {
               </Col>
               <Col>
                 <Button onClick={switchMode}>
-                  { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }
+                  { isSignup ? MainLib.auth.signUpText : MainLib.auth.signInText }
                 </Button>
               </Col>
             </Row>

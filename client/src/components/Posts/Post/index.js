@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CardSimple } from '../../Card';
+import { CardSimple } from 'components/Card';
 
 const Post = ({ post }) => (
   <CardSimple

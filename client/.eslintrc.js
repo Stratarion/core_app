@@ -51,6 +51,7 @@ module.exports = {
         maxEOF: 1,
       },
     ],
+    'no-console': 0,
     'no-underscore-dangle': [
       'error',
       {

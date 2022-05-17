@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Typography, Spin, Row, Col, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import Post from 'components/Posts/Post/Post';
+import Post from 'components/Posts/Post';
 import { getPostsByCreator, getPostsBySearch } from 'actions/posts';
 
 const { Title } = Typography;

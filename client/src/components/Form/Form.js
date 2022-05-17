@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Card, Button, Col, Row, Input, Typography, Form as AForm } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, updatePost } from '../../actions/posts';
+import { MainLib } from 'lib';
+import { createPost, updatePost } from 'actions/posts';
 
 const { Text, Title } = Typography;
 
@@ -40,7 +41,7 @@ const Form = ({ currentId, setCurrentId, showForm }) => {
   if (!user?.result?.name) {
     return (
       <Card bordered>
-        <Text>Please Sign In to create your own memories and like others memories.</Text>
+        <Text>{MainLib.posts.loginNotification}</Text>
       </Card>
     );
   }
@@ -50,7 +51,7 @@ const Form = ({ currentId, setCurrentId, showForm }) => {
       <AForm onFinish={handleSubmit}>
         <Row gutter={16}>
           <Col span={24}>
-            <Title level={5}>{currentId ? `Editing "${post?.title}"` : 'Creating a Memory'}</Title>
+            <Title level={5}>{currentId ? `${MainLib.posts.editing} "${post?.title}"` : MainLib.posts.createPost}</Title>
           </Col>
           <Col span={12}>
             <AForm.Item
@@ -74,10 +75,10 @@ const Form = ({ currentId, setCurrentId, showForm }) => {
             </AForm.Item>
           </Col>
           <Col>
-            <Button onClick={() => showForm(false)}>Отмена</Button>
+            <Button onClick={() => showForm(false)}>{MainLib.buttons.cancel}</Button>
           </Col>
           <Col>
-            <Button htmlType="submit" type="primary">Принять</Button>
+            <Button htmlType="submit" type="primary">{MainLib.buttons.accept}</Button>
           </Col>
         </Row>
       </AForm>

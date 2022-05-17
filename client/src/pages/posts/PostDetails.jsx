@@ -7,6 +7,7 @@ import { getPost, getPostsBySearch } from 'actions/posts';
 import CommentSection from 'components/CommentSection';
 
 const { Title, Text } = Typography;
+const linkStyle = { textDecoration: 'none', color: '#3f51b5' };
 
 const Post = () => {
   const { post, isLoading } = useSelector((state) => state.posts);
@@ -40,7 +41,7 @@ const Post = () => {
         <Col span={post.selectedFile ? 16 : 24}>
           <Title level={2}>{post.title}</Title>
           <Text>{post.tags.map((tag) => (
-            <Link to={`/tags/${tag}`} style={{ textDecoration: 'none', color: '#3f51b5' }}>
+            <Link to={`/tags/${tag}`} style={linkStyle}>
               {` #${tag} `}
             </Link>
           ))}
@@ -49,7 +50,7 @@ const Post = () => {
           <Divider />
           <Title level={5}>
             Created by:
-            <Link to={`/creators/${post.name}`} style={{ textDecoration: 'none', color: '#3f51b5' }}>
+            <Link to={`/creators/${post.name}`} style={linkStyle}>
               {` ${post.name}`}
             </Link>
           </Title>

@@ -7,6 +7,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import * as api from 'api/index';
 import { getPostsBySearch } from 'actions/posts';
 import FormAdd from 'components/Form/Form';
+import ROUTS from 'router/routs';
+import { MainLib } from 'lib';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -57,7 +59,7 @@ const PostsPage = () => {
   const searchPost = (values) => {
     if (values.search.trim() || values.tags) {
       dispatch(getPostsBySearch({ search: values.search, tags: values.tags.join(',') }));
-      history.push(`/posts/search?searchQuery=${values.search || 'none'}&tags=${values.tags.join(',')}`);
+      history.push(`${ROUTS.posts}/search?searchQuery=${values.search || 'none'}&tags=${values.tags.join(',')}`);
     } else {
       history.push('/');
     }
@@ -66,10 +68,10 @@ const PostsPage = () => {
   return (
     <Row gutter={[16, 16]}>
       <Col>
-        <Button color="primary" onClick={() => setShowSearch(true)} icon={<SearchOutlined />}>Поиск</Button>
+        <Button color="primary" onClick={() => setShowSearch(true)} icon={<SearchOutlined />}>{MainLib.buttons.search}</Button>
       </Col>
       <Col>
-        <Button color="primary" onClick={() => setShowAdd(true)} icon={<PlusOutlined />}>Создать запись</Button>
+        <Button color="primary" onClick={() => setShowAdd(true)} icon={<PlusOutlined />}>{MainLib.posts.createPost}</Button>
       </Col>
       <Col xs={24} sm={24} md={24}>
         <InfiniteScroll
@@ -105,7 +107,7 @@ const PostsPage = () => {
               >
                 <List.Item.Meta
                   // avatar={<Avatar src={item.selectedFile} />}
-                  title={<Link to={`/posts/${item._id}`}>{item.title}</Link>}
+                  title={<Link to={`${ROUTS.POSTS}/${item._id}`}>{item.title}</Link>}
                   description={item.name}
                 />
                 {item?.message?.split(' ').splice(0, 80).join(' ')}
@@ -116,7 +118,7 @@ const PostsPage = () => {
         </InfiniteScroll>
       </Col>
       <Drawer
-        title="Поиск записей"
+        title={MainLib.posts.searchPosts}
         width={configs.drawerWidth}
         onClose={() => setShowSearch(false)}
         visible={showSearch}
@@ -131,31 +133,31 @@ const PostsPage = () => {
               <Col span={12}>
                 <Form.Item
                   name="search"
-                  label="Заголовок"
+                  label={MainLib.posts.title}
                 >
-                  <Input placeholder="Заголовок поста" />
+                  <Input placeholder={MainLib.posts.titlePlaceholder} />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
                   name="tags"
-                  label="Тэги"
+                  label={MainLib.posts.tags}
                 >
-                  <Input placeholder="Тэги через пробел" />
+                  <Input placeholder={MainLib.posts.tagsPlaceholder} />
                 </Form.Item>
               </Col>
               <Col>
-                <Button onClick={() => setShowSearch(false)}>Отмена</Button>
+                <Button onClick={() => setShowSearch(false)}>{MainLib.buttons.cancel}</Button>
               </Col>
               <Col>
-                <Button htmlType="submit" type="primary">Принять</Button>
+                <Button htmlType="submit" type="primary">{MainLib.buttons.accept}</Button>
               </Col>
             </Row>
           </Form>
         </Col>
       </Drawer>
       <Drawer
-        title="Добавить запись"
+        title={MainLib.posts.createPost}
         width={configs.drawerWidth}
         onClose={() => setShowAdd(false)}
         visible={showAdd}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Row, Col, Skeleton } from 'antd';
-import Post from './Post/Post';
-import NoResults from '../NoResults';
+import NoResults from 'components/NoResults';
+import Post from './Post';
 
 const Posts = ({ setCurrentId }) => {
   const { posts, isLoading } = useSelector((state) => state.posts);

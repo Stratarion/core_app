@@ -1,7 +1,8 @@
 import React from 'react';
 import { Col, Row, Typography, Button, Input, Divider, Form } from 'antd';
 import { useDispatch } from 'react-redux';
-import { commentPost } from '../actions/posts';
+import { commentPost } from 'actions/posts';
+import { MainLib } from 'lib';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -16,7 +17,7 @@ const CommentSection = ({ post }) => {
   };
 
   const renderNoComments = () => (
-    <Text>Ещё никто не оставил комментарий</Text>
+    <Text>{MainLib.posts.noComments}</Text>
   );
 
   const renderCommentsBlock = () => comments.map((c) => (
@@ -30,17 +31,17 @@ const CommentSection = ({ post }) => {
     <Form onFinish={handleComment} layout="vertical" hideRequiredMark>
       <Row>
         <Col span={24}>
-          <Title level={4}>Комментарии</Title>
+          <Title level={4}>{MainLib.posts.comments}</Title>
           { comments ? renderNoComments() : renderCommentsBlock() }
         </Col>
         <Divider />
         <Col span={24}>
-          <Form.Item label="Написать комментарий" name="comment">
+          <Form.Item label={MainLib.posts.writeComment} name="comment">
             <TextArea />
           </Form.Item>
         </Col>
         <Col>
-          <Button htmlType="submit">Отправить</Button>
+          <Button htmlType="submit">{MainLib.buttons.send}</Button>
         </Col>
       </Row>
     </Form>

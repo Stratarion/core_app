@@ -2,26 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
+import { MenuLib } from 'lib';
 import { Menu, Button, Row, Col, Avatar } from 'antd';
+import { PAGES } from './constants';
 
 import * as actionType from '../../constants/actionTypes';
-
-// const pages = ['Products', 'Pricing', 'Blog'];
-
-const pages = [
-  {
-    title: 'Расписание',
-    link: '/timeshit',
-  },
-  {
-    title: 'Работники',
-    link: '/professionals',
-  },
-  {
-    title: 'Блог',
-    link: '/posts',
-  },
-];
 
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -32,15 +17,13 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
-
     history.push('/auth');
-
     setUser(null);
   };
 
   useEffect(() => {
-    const currentPathIndex = pages.findIndex((item) => location.pathname.includes(item.link));
-    if (currentPathIndex >= 0) setCurrentPage(pages[currentPathIndex].link);
+    const currentPathIndex = PAGES.findIndex((item) => location.pathname.includes(item.link));
+    if (currentPathIndex >= 0) setCurrentPage(PAGES[currentPathIndex].link);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -59,7 +42,7 @@ const Navbar = () => {
     <Row justify="space-between">
       <Col span={18}>
         <Menu theme="dark" selectedKeys={[currentPage]} mode="horizontal">
-          {pages.map((menuItem) => (
+          {PAGES.map((menuItem) => (
             <Menu.Item key={menuItem.link}>
               <Link to={menuItem.link}>{menuItem.title}</Link>
             </Menu.Item>
@@ -72,13 +55,13 @@ const Navbar = () => {
             <Avatar src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
           </Col>
           <Col span={2}>
-            <Button color="secondary" onClick={logout}>Logout</Button>
+            <Button color="secondary" onClick={logout}>{MenuLib.logout}</Button>
           </Col>
         </>
       ) : (
         <Col span={2}>
           <Button component={Link} color="primary">
-            <Link to="/auth">Sign In</Link>
+            <Link to="/auth">{MenuLib.signin}</Link>
           </Button>
         </Col>
       )}
