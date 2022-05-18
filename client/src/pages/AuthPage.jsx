@@ -116,7 +116,7 @@ const SignUp = () => {
               </Col>
               <Col>
                 <Button onClick={switchMode}>
-                  { isSignup ? MainLib.auth.signUpText : MainLib.auth.signInText }
+                  { isSignup ? MainLib.auth.signInText : MainLib.auth.signUpText }
                 </Button>
               </Col>
             </Row>
