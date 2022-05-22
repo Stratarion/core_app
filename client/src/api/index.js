@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'http://134.0.115.2:5000' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
     req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
   }
+
+  req.headers.AccessControlAllowOrigin = 'http://134.0.115.2:5000';
 
   return req;
 });
