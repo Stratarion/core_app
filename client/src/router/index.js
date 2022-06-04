@@ -7,6 +7,7 @@ import {
   CreatorOrTag,
   PageTimeshit,
   PageProfessionals,
+  HomePage,
 } from 'pages';
 import ROUTS from 'router/routs';
 
@@ -14,7 +15,7 @@ const Router = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   return (
     <Switch>
-      <Route path={ROUTS.HOME} exact component={() => <Redirect to={ROUTS.POSTS} />} />
+      <Route path={ROUTS.HOME} exact component={HomePage} />
       <Route path={ROUTS.POSTS} exact component={PostsPage} />
       <Route path={`${ROUTS.POSTS}/search`} exact component={PostsPage} />
       <Route path={`${ROUTS.POSTS}/:id`} exact component={PostDetails} />

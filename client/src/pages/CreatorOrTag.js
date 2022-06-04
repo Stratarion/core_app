@@ -4,6 +4,7 @@ import { Typography, Spin, Row, Col, Divider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from 'components/Posts/Post';
 import { getPostsByCreator, getPostsBySearch } from 'actions/posts';
+import { PageContainer } from 'components';
 
 const { Title } = Typography;
 
@@ -25,23 +26,25 @@ const CreatorOrTag = () => {
   if (!posts.length && !isLoading) return 'No posts';
 
   return (
-    <Row>
-      <Col>
-        <Title level={2}>{name}</Title>
-      </Col>
-      <Divider />
-      <Col>
-        {isLoading ? <Spin /> : (
-          <Row>
-            {posts?.map((post) => (
-              <Col key={post._id} item xs={12} sm={12} md={6} lg={3}>
-                <Post post={post} />
-              </Col>
-            ))}
-          </Row>
-        )}
-      </Col>
-    </Row>
+    <PageContainer>
+      <Row>
+        <Col>
+          <Title level={2}>{name}</Title>
+        </Col>
+        <Divider />
+        <Col>
+          {isLoading ? <Spin /> : (
+            <Row>
+              {posts?.map((post) => (
+                <Col key={post._id} item xs={12} sm={12} md={6} lg={3}>
+                  <Post post={post} />
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Col>
+      </Row>
+    </PageContainer>
   );
 };
 
