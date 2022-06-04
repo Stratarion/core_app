@@ -6,7 +6,6 @@ import { MainLib } from 'lib';
 import Router from 'router';
 
 const { Header, Content, Footer } = Layout;
-const contentStyle = { padding: '20px 50px' };
 
 const App = () => (
   <BrowserRouter>
@@ -14,7 +13,7 @@ const App = () => (
       <Header>
         <Navbar />
       </Header>
-      <Content style={contentStyle}>
+      <Content>
         <Router />
       </Content>
       <Footer style={{ textAlign: 'center' }}>{MainLib.footerText}</Footer>

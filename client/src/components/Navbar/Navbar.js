@@ -3,6 +3,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 import { MenuLib } from 'lib';
+import ROUTS from 'router/routs';
 import { Menu, Button, Row, Col, Avatar } from 'antd';
 import { PAGES } from './constants';
 
@@ -39,8 +40,11 @@ const Navbar = () => {
   }, [location]);
 
   return (
-    <Row justify="space-between">
-      <Col span={18}>
+    <Row>
+      <Col span={2}>
+        <Link to={ROUTS.HOME}>Home</Link>
+      </Col>
+      <Col span={16}>
         <Menu theme="dark" selectedKeys={[currentPage]} mode="horizontal">
           {PAGES.map((menuItem) => (
             <Menu.Item key={menuItem.link}>
@@ -59,7 +63,7 @@ const Navbar = () => {
           </Col>
         </>
       ) : (
-        <Col span={2}>
+        <Col span={2} offset={4}>
           <Button component={Link} color="primary">
             <Link to="/auth">{MenuLib.signin}</Link>
           </Button>

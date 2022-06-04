@@ -1,10 +1,11 @@
 import React from 'react';
 import { MainLib } from 'lib';
+import { PageContainer } from 'components';
 
 const PageProfessionals = () => (
-  <div>
+  <PageContainer>
     {MainLib.professionals.title}
-  </div>
+  </PageContainer>
 );
 
 export default PageProfessionals;

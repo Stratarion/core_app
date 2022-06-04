@@ -1,10 +1,11 @@
 import { MainLib } from 'lib';
 import React from 'react';
+import { PageContainer } from 'components';
 
 const PageTimeshit = () => (
-  <div>
+  <PageContainer>
     {MainLib.timeshit.title}
-  </div>
+  </PageContainer>
 );
 
 export default PageTimeshit;

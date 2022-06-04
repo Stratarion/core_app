@@ -9,6 +9,13 @@
         "googleSignIn": "Войти с Google",
         "search": "Поиск"
     },
+    "home": {
+        "benefit1": "Кубок",
+        "benefit2": "benefit2",
+        "benefit3": "benefit3",
+        "benefit1Text": "Какой-то кубок",
+        "sliderTitle": "Заголовок слайда"
+    },
     "posts": {
         "createPost": "Создать запись",
         "editing": "Редактировать",

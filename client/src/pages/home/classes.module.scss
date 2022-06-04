@@ -1,0 +1,31 @@
+.contentStyle {
+  height: 160px;
+  color: #fff;
+  line-height: 160px;
+  text-align: center;
+};
+
+.container {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #364d79;
+  height: 500px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+};
+
+.benefitImg {
+  font-size: 56px;
+}
+
+.benefit {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.benefitsContainer {
+  padding: 50px 0 30px;
+}
